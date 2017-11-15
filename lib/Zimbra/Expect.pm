@@ -3,6 +3,7 @@ use strict;
 use warnings;
 use IPC::Open2;
 use IO::Select;
+use IO::Handle;
 
 our $VERSION = '0.1.0';
 

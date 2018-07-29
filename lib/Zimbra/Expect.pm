@@ -43,6 +43,8 @@ sub _printRead {
             last;
         };
     }
+    # not interested in reading the command I have sent.
+    $buffer =~ s/^.*?\n//;
     warn "ANSWER: '$buffer'\n" if $self->{debug};
     return $buffer;
 }
@@ -97,7 +99,7 @@ Zimbra::Expect - Remote control zmprov and zmmailbox
     $box->act('renameFolder '.$from.' '.$to);
     next;
  }
- 
+
 =head1 DESCRIPTION
 
 Interactively use a zimbra cli command. The following methods are provided:

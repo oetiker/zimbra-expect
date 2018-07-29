@@ -80,12 +80,13 @@ __END__
 
 =head1 NAME
 
-Zimbra::Expect - Remote control zmprov and zmmailbox
+Zimbra::Expect - Start zmprov or zmmailbox and feed them commands
 
 =head1 SYNOPSIS
 
- use Zimbra::Expect::ZmXXX;
- my $box = Zimbra::Expect::ZmXXXX->new(verbose=>1);
+ # zmmailbox
+ use Zimbra::Expect::ZmMailbox;
+ my $box = Zimbra::Expect::ZmMailbox->new(verbose=>1);
  my %folder;
  my $old = 'Saved';
  my $new = 'Received';
@@ -100,9 +101,28 @@ Zimbra::Expect - Remote control zmprov and zmmailbox
     next;
  }
 
+ # zmprov
+ use Zimbra::Expect::ZmProv;
+ my $prov = Zimbra::Expect::ZmProv->new(verbose=>1, debug=>1);
+ my $accounts = $prov->cmd('gaa');
+ for my $account (split /\n/, $accounts){
+    say $account;
+    # Do more stuff
+ }
+
 =head1 DESCRIPTION
 
-Interactively use a zimbra cli command. The following methods are provided:
+zmmailbox and zmprov take a long time to start. They are also quite heavy on memory.
+This makes scipts that issue many zmmailbox / zmprov commands slow.
+
+With this module, you only start zmmailbox or zmprov once and use them interactively, as if you were typing into their cli shell.
+The results of the commands are returned to you.
+
+You will only incur the costs of starting the zmprov / zmmailbox command once, speeding up your script a lot.
+
+Use the 'verbose' and 'debug' options to get additional information.
+
+The following methods are provided:
 
 =head2 new(verbose=>$a,noaction=>$b,debug=>$c)
 

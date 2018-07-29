@@ -43,6 +43,8 @@ sub _printRead {
             last;
         };
     }
+    # not interested in reading the command I have sent.
+    $buffer =~ s/^.*?\n//;
     warn "ANSWER: '$buffer'\n" if $self->{debug};
     return $buffer;
 }
@@ -113,9 +115,10 @@ Zimbra::Expect - Start zmprov or zmmailbox and feed them commands
 zmmailbox and zmprov take a long time to start. They are also quite heavy on memory.
 This makes scipts that issue many zmmailbox / zmprov commands slow.
 
-With this module, you only zmmailbox or zmprov once and use them nteractively, like your were typing into their cli shell. The results of the commands are returned to you.
+With this module, you only start zmmailbox or zmprov once and use them interactively, as if you were typing into their cli shell.
+The results of the commands are returned to you.
 
-You will only incur the costs of starting the zmprov / zmmailbox command once, potentially speeding up your script a lot.
+You will only incur the costs of starting the zmprov / zmmailbox command once, speeding up your script a lot.
 
 Use the 'verbose' and 'debug' options to get additional information.
 
